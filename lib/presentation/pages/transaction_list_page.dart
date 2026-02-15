@@ -124,17 +124,14 @@ class TransactionListHeader extends StatelessWidget {
                 Material(
                   color: ColorScheme.of(context).primaryFixedDim,
                   child: Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
-                    child: AdaptiveTextField(
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.all(Radius.circular(8)),
-                        ),
-                        filled: true,
-                        prefixIcon: Icon(Icons.search),
-                        hintText: "Search merchants",
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    child: AdaptiveTextFormField(
+                      onChanged: (text) => context.read<TransactionBloc>().add(
+                        SearchTransaction(text),
                       ),
+                      filled: true,
+                      leading: Icon(Icons.search),
+                      hintText: "Search merchants",
                     ),
                   ),
                 ),

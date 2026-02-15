@@ -23,6 +23,16 @@ sealed class TransactionState extends Equatable {
   List<Transaction> get transaction {
     if (query.isEmpty && selectedCategory.isEmpty) return list;
 
+    if (selectedCategory.isEmpty) {
+      return list
+          .where(
+            (transaction) => transaction.merchant.toLowerCase().contains(
+              query.toLowerCase(),
+            ),
+          )
+          .toList();
+    }
+
     return (query.isEmpty
             ? list.where(
                 (transaction) => transaction.category == selectedCategory,

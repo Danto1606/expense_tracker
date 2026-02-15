@@ -36,20 +36,24 @@ class AdaptiveTextField extends StatelessWidget {
 class AdaptiveTextFormField extends StatelessWidget {
   const AdaptiveTextFormField({
     super.key,
-    required this.hintText,
-    required this.labelText,
+    this.hintText = '',
+    this.labelText,
     this.onChanged,
     this.validator,
     this.inputType = TextInputType.text,
     this.inputAction = TextInputAction.next,
+    this.filled = false,
+    this.leading,
   });
 
   final void Function(String)? onChanged;
   final String hintText;
-  final String labelText;
+  final String? labelText;
   final String? Function(String?)? validator;
   final TextInputType inputType;
   final TextInputAction inputAction;
+  final bool filled;
+  final Widget? leading;
 
   @override
   Widget build(BuildContext context) {
@@ -57,9 +61,10 @@ class AdaptiveTextFormField extends StatelessWidget {
       return CupertinoFormSection.insetGrouped(
         margin: .symmetric(horizontal: 16),
         backgroundColor: Colors.transparent,
-        header: Text(labelText),
+        header: labelText != null ? Text(labelText ?? '') : null,
         children: [
           CupertinoTextFormFieldRow(
+            prefix: leading,
             placeholder: hintText,
             onChanged: onChanged,
             validator: validator,
@@ -83,11 +88,19 @@ class AdaptiveTextFormField extends StatelessWidget {
         crossAxisAlignment: .start,
         spacing: 4,
         children: [
-          Text(labelText, style: InputDecorationTheme.of(context).labelStyle),
+          if (labelText != null)
+            Text(
+              labelText ?? '',
+              style: InputDecorationTheme.of(context).labelStyle,
+            ),
           TextFormField(
             decoration: InputDecoration(
               hintText: hintText,
-              border: const OutlineInputBorder(),
+              prefixIcon: leading,
+              border: OutlineInputBorder(
+                borderSide: filled ? BorderSide.none : const BorderSide(),
+              ),
+              filled: filled,
             ),
             textInputAction: inputAction,
             onChanged: onChanged,

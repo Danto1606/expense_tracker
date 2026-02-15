@@ -83,7 +83,7 @@ class _CreateTransactionPageState extends State<CreateTransactionPage> {
                                 .read<CreateTransactionCubit>()
                                 .setCategory,
                             width: constraints.maxWidth < 600
-                                ? constraints.maxWidth
+                                ? constraints.maxWidth - 32
                                 : (constraints.maxWidth / 2) - 24,
                             menuHeight: constraints.maxHeight > 600
                                 ? null

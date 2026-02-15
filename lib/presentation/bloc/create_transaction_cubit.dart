@@ -24,8 +24,6 @@ class CreateTransactionCubit extends Cubit<CreateTransactionState> {
     if (state.loading) return;
     emit(state.copyWith(loading: true));
 
-    print(state.merchant);
-
     final transaction = Transaction(
       id: -1,
       amount: state.amount,
@@ -39,7 +37,6 @@ class CreateTransactionCubit extends Cubit<CreateTransactionState> {
 
     switch (data) {
       case SuccessState _:
-        print(data.data?.merchant);
         emit(CreateTransactionSuccess());
       case ErrorState(:final error):
         emit(
